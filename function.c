@@ -1,4 +1,7 @@
+#include <mega328p.h>
+#include <delay.h> 
 #define fosc    16000000
+volatile unsigned char rxdata;
 void uart_init(unsigned int BAUDRATE)
 {
   //Config BAUD Rate
@@ -28,6 +31,7 @@ void putstring(char *str)
         str++;
    }
 }
+
 void floatToString(float num, char* buffer, int decimalPlaces) {
     // Chuy?n d?i ph?n nguyên thành string
     int intPart = (int)num;
@@ -64,44 +68,20 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
     buffer[index] = '\n';
 }
 
-// Hàm nhận một ký tự từ UART
-unsigned char USART_Receive(void) {
-    // Chờ cho đến khi dữ liệu nhận sẵn sàng
-    while (!(UCSRA & (1<<RXC)));
-    // Trả về dữ liệu đã nhận
-    return UDR;
+// Hàm nh?n m?t ký t? t? UART
+interrupt [USART_RXC] void usart_rx_isr(void) {
+    rxdata = UDR0;
+    putchar(rxdata);
 }
 
-// Hàm nhận một chuỗi từ UART
-void USART_ReceiveString(char* buffer, int max_length) {
-    int i = 0;
-    char received_char;
-    // Nhận lần lượt từng ký tự cho đến khi gặp ký tự kết thúc '\0'
-    do {
-        received_char = USART_Receive();
-        buffer[i] = received_char;
-        i++;
-    } while (received_char != '\0' && i < max_length - 1); // Tránh việc tràn bộ nhớ và lưu lại ký tự kết thúc
-    // Kết thúc chuỗi với ký tự '\0'
-    buffer[i] = '\0';
-}
-
-int main(void) {
-    // Khởi tạo UART với tốc độ baud là 9600
-    uart_init(9600);
-
-    // Khai báo một buffer để lưu chuỗi nhận được
-    char received_string[100];
-
-    // Vòng lặp chính
-    while (1) {
-        // Nhận chuỗi từ UART
-        USART_ReceiveString(received_string, 100);
-        
-        // In ra chuỗi đã nhận được
-        putstring("Received string: ");
-        putstring(received_string);
+void main(){
+    uart_init(9600);     
+    while(1){
+        float temp = 12.3432534;
+        char buffer[20]; 
+        floatToString(temp, buffer, 6);  
+        putstring(buffer);
+        delay_ms(500);
     }
-
-    return 0;
 }
+
