@@ -33,13 +33,13 @@ int ultrasonic() {
     return cm;
 }
 
-void main() {
-    DDRC |= (1 << Trig);   // Set Trig pin as output
-    DDRC &= ~(1 << Echo);  // Set Echo pin as input
+// void main() {
+//     DDRC |= (1 << Trig);   // Set Trig pin as output
+//     DDRC &= ~(1 << Echo);  // Set Echo pin as input
 
-    while (1) {
-        int distance = ultrasonic();
-        // Use the distance as needed
-        delay_ms(100); // Example delay
-    }
-}
+//     while (1) {
+//         int distance = ultrasonic();
+//         // Use the distance as needed
+//         delay_ms(100); // Example delay
+//     }
+// }

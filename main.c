@@ -6,6 +6,14 @@
  */
 
 #include <mega328p.h>
+#include "lib/millis.h"
+#include "lib/gpio.h"
+#include "lib/DCMotor.h"
+#include "lib/uart.h"
+#include "lib/Ultrasonic.h"
+
+
+
 
 void main(void)
 {

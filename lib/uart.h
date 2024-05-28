@@ -74,13 +74,13 @@ interrupt [USART_RXC] void usart_rx_isr(void) {
     putchar(rxdata);
 }
 
-void main(){
-    uart_init(9600);     
-    while(1){
-        float temp = 12.3432534;
-        char buffer[20]; 
-        floatToString(temp, buffer, 6);  
-        putstring(buffer);
-        delay_ms(500);
-    }
-}
+// void main(){
+//     uart_init(9600);     
+//     while(1){
+//         float temp = 12.3432534;
+//         char buffer[20]; 
+//         floatToString(temp, buffer, 6);  
+//         putstring(buffer);
+//         delay_ms(500);
+//     }
+// }
