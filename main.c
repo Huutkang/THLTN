@@ -1,17 +1,10 @@
-/*
- * main.c
- *
- * Created: 28/05/2024 3:52:42 CH
- * Author: Thang
- */
-
 #include <mega328p.h>
 #include "lib/millis.h"
+#include "pinMode.h"
 #include "lib/gpio.h"
-#include "lib/DCMotor.h"
 #include "lib/uart.h"
 #include "lib/Ultrasonic.h"
-
+#include "lib/DCMotor.h"
 
 
 

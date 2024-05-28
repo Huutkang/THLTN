@@ -1,18 +1,18 @@
 #include <mega328p.h>
 #include <delay.h>
 
-#define Echo 0 // A0 corresponds to PC0
-#define Trig 1 // A1 corresponds to PC1
+#define Echo 0 // A0 - PC0
+#define Trig 1 // A1 - PC1
 
 long pulseIn(int pin, int value) {
     long width = 0;
-    // Wait for any previous pulse to end
+    // Doi xung truoc do ket thuc
     while ((PINC & (1 << pin)) == value);
 
-    // Wait for the pulse to start
+    // Cho cho xung bat dau
     while ((PINC & (1 << pin)) != value);
 
-    // Measure the width of the pulse
+    // Do do rong cua xung
     while ((PINC & (1 << pin)) == value) {
         width++;
         delay_us(1);
@@ -39,7 +39,7 @@ int ultrasonic() {
 
 //     while (1) {
 //         int distance = ultrasonic();
-//         // Use the distance as needed
+//         // xu dung khoang cach khi can thiet
 //         delay_ms(100); // Example delay
 //     }
 // }

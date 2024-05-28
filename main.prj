@@ -7,7 +7,7 @@ A=Freeware, for evaluation and
 C=
 D=28/05/2024 3:52:42 CH
 Files=1
-OpenedFiles=1
+OpenedFiles=2
 AllowDisplayFunctionCallTree=0
 CleanUp=2
 DebugOutputListFilesDirectory=Debug\List
@@ -19,9 +19,11 @@ OutputObjectFilesDirectory=Release
 OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 F1=main.c
-ActiveTab=1
+ActiveTab=2
 OF1=main.c
-TimeStamp1=1488748182
+TimeStamp1=1488749286
+OF2=lib\gpio.h
+TimeStamp2=1488748692
 non-commercial use only
 [CompilerDebug]
 Chip=ATmega328P
@@ -500,14 +502,15 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1488748236
+TimeStamp=1488749519
 [BookmarksFoldedCode]
-Files=1
+Files=2
 F1=main.c
+F2=lib\gpio.h
 [Bookmarks1]
-TimeStamp=1488748182
-Row=0
-Column=0
+TimeStamp=1488749286
+Row=10
+Column=37
 ScrollPosX=0
 ScrollPosY=0
 BK0=-1
@@ -521,4 +524,22 @@ BK7=-1
 BK8=-1
 BK9=-1
 [FoldedCode1]
+Blocks=0
+[Bookmarks2]
+TimeStamp=1488748692
+Row=12
+Column=68
+ScrollPosX=0
+ScrollPosY=38
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[FoldedCode2]
 Blocks=0

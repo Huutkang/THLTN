@@ -1,14 +1,7 @@
-/*
- * gpio.c
- *
- * Created: 19/05/2024 10:02:10 CH
- * Author: HP
- */
-
 #include <mega328p.h>
 #include <avr/io.h>
 
-// H�m chuy?n ch�n s? th�nh c?ng v� bit tuong ?ng
+// Ham chuyen chan so thanh cong va bit tuong ung
 uint8_t digitalPinToPort(uint8_t pin);
 uint8_t digitalPinToBitMask(uint8_t pin);
 
@@ -16,10 +9,10 @@ int digitalRead(uint8_t pin) {
     uint8_t bit = digitalPinToBitMask(pin);
     uint8_t port = digitalPinToPort(pin);
 
-    // X�c d?nh c?ng v� d?c gi� tr? t? thanh ghi PIN c?a c?ng d�
+    // Xac dinh cong va doc gia tri tu thanh ghi PIN cua cong do
     if (port == NOT_A_PIN) return LOW;
 
-    // �?c gi� tr? t? c?ng tuong ?ng
+    // Doc gia tri tu cong tuong ung
     if (*portInputRegister(port) & bit) return HIGH;
     return LOW;
 }
@@ -29,11 +22,11 @@ void digitalWrite(uint8_t pin, uint8_t value) {
     uint8_t port = digitalPinToPort(pin);
     volatile uint8_t *out;
 
-    // X�c d?nh c?ng v� l?y con tr? t?i thanh ghi PORT tuong ?ng
+    // Xac dinh cong va lay con tro toi thanh ghi PORT tuong ung
     if (port == NOT_A_PIN) return;
     out = portOutputRegister(port);
 
-    // �?t ho?c x�a bit tuong ?ng trong thanh ghi PORT
+    // Dat hoac xoa bit tuong ung trong thanh ghi PORT
     if (value == LOW) {
         *out &= ~bit;
     } else {
@@ -41,8 +34,7 @@ void digitalWrite(uint8_t pin, uint8_t value) {
     }
 }
 
-
-// H�m chuy?n ch�n s? th�nh c?ng
+// Ham chuyen chan so thanh cong
 uint8_t digitalPinToPort(uint8_t pin) {
     if (pin >= 0 && pin <= 7) return PORT_D;
     if (pin >= 8 && pin <= 13) return PORT_B;
@@ -50,7 +42,7 @@ uint8_t digitalPinToPort(uint8_t pin) {
     return NOT_A_PIN;
 }
 
-// H�m chuy?n ch�n s? th�nh bit mask
+// Ham chuyen chan so thanh bit mask
 uint8_t digitalPinToBitMask(uint8_t pin) {
     if (pin >= 0 && pin <= 7) return (1 << pin);
     if (pin >= 8 && pin <= 13) return (1 << (pin - 8));
@@ -58,7 +50,7 @@ uint8_t digitalPinToBitMask(uint8_t pin) {
     return 0;
 }
 
-// H�m tr? v? con tr? t?i thanh ghi PIN c?a c?ng
+// Ham tra ve con tro toi thanh ghi PIN cua cong
 volatile uint8_t* portInputRegister(uint8_t port) {
     switch (port) {
         case PORT_B: return &PINB;

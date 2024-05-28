@@ -1,4 +1,3 @@
-#ifndef _MILLIS_H_
 #define _MILLIS_H_
 
 unsigned long millis_value;
@@ -30,4 +29,3 @@ unsigned long millis (void){
 	     #asm("sei")
      	 return m;         
 }
-#endif

@@ -1,15 +1,21 @@
 #include <mega328p.h>
-#include <delay.h> 
+
+
+
 #define fosc    16000000
+
 volatile unsigned char rxdata;
+
+
+
 void uart_init(unsigned int BAUDRATE)
 {
-  //Config BAUD Rate
+  // Cau hinh toc do BAUD
     unsigned int n = fosc/BAUDRATE/16 - 1;
     UBRR0H = n>>8;
     UBRR0L = n;
 //Config mode and data frame 
-//Asynchronous mode, 8 data bit, 1 stop bit, no Parity
+//Che đo khong đong bo, 8 bit du lieu, 1 bit dung, khong co tinh chan le
     UCSR0C = 0b00000110;
 //Enable transmiter and receiver, RX interupt
     UCSR0B = 0b10011000;  
@@ -17,7 +23,7 @@ void uart_init(unsigned int BAUDRATE)
 }
 void putchar(unsigned char data)
 {
-	while (!(UCSR0A & 0b00100000)); //wait for data register empty
+	while (!(UCSR0A & 0b00100000)); // cho cho thanh ghi du lieu trong
 	UDR0 = data;
 }
 void putstring(char *str)
@@ -25,7 +31,6 @@ void putstring(char *str)
    while (*str)
    {
         putchar(*str); 
-        //if see the line feed, add carriage return
         if (*str == '\n')
         putchar('\r');
         str++;
@@ -33,7 +38,7 @@ void putstring(char *str)
 }
 
 void floatToString(float num, char* buffer, int decimalPlaces) {
-    // Chuy?n d?i ph?n nguyên thành string
+    // Chuyen doi phan nguyên thành string
     int intPart = (int)num;
     int index = 0;
     int i, j;
@@ -45,7 +50,7 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
         intPart /= 10;
     } while (intPart != 0);
 
-    // Ð?o ngu?c chu?i ph?n nguyên
+    // Ðao nguoc chuoi phan nguyên
     
     for (i = 0, j = index - 1; i < j; i++, j--) {
         temp = buffer[i];
@@ -53,10 +58,10 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
         buffer[j] = temp;
     }
 
-    // Thêm d?u ch?m
+    // Thêm dau cham
     buffer[index++] = '.';
 
-    // Chuy?n d?i ph?n th?p phân thành string
+    // Chuyen doi phan thap phan thanh string
     for ( i = 0; i < decimalPlaces; i++) {
         decimalPart *= 10;
         digit = (int)decimalPart;
@@ -64,11 +69,11 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
         decimalPart -= digit;
     }
 
-    // K?t thúc string
+    // Ket thuc string
     buffer[index] = '\n';
 }
 
-// Hàm nh?n m?t ký t? t? UART
+// Hàm nhan mot ký tu tu UART
 interrupt [USART_RXC] void usart_rx_isr(void) {
     rxdata = UDR0;
     putchar(rxdata);
@@ -84,3 +89,5 @@ interrupt [USART_RXC] void usart_rx_isr(void) {
 //         delay_ms(500);
 //     }
 // }
+
+
