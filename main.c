@@ -1,10 +1,10 @@
 #include <mega328p.h>
+// #include "lib/pinMode.h"
 #include "lib/millis.h"
-#include "pinMode.h"
-#include "lib/gpio.h"
+// #include "lib/gpio.h"
 #include "lib/uart.h"
-#include "lib/Ultrasonic.h"
-#include "lib/DCMotor.h"
+// #include "lib/Ultrasonic.h"
+// #include "lib/DCMotor.h"
 
 
 
@@ -16,3 +16,5 @@ while (1)
 
     }
 }
+
+

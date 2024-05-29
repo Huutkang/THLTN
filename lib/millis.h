@@ -2,7 +2,7 @@
 
 unsigned long millis_value;
 
-interrupt [TIM1_COMP] void timer1_comp_isr(void)
+interrupt [TIM1_COMPA] void timer1_comp_isr(void)
 {
     // Increment millisecond every 1ms
     millis_value++;  
@@ -19,13 +19,13 @@ void init_millis(unsigned long f_cpu){
      
      // Enable the compare match interrupt
 	 TIMSK1 |= (1 << OCIE1A);
-#asm('sei')
+#asm("sei")
 }
 unsigned long millis (void){
 		 //Disable interrupts while we read millis_value or we might get an inconsistent value
 		 unsigned long millis_return;
 		 #asm("cli")
-    	 m = millis_value;
+    	 millis_return = millis_value;
 	     #asm("sei")
-     	 return m;         
+     	 return millis_return;         
 }

@@ -67,14 +67,14 @@ void setup_1_chan(const char* ten_chan, char input_or_output) {
     }
 }
 
-// int main() {
-//     // Sử dụng hàm:
-//     setup_1_chan("D2", 'I');
-//     setup_1_chan("A3", 'I');
-//     setup_1_chan("D9", 'O');
-//     setup_1_chan("A4", 'O');  // A4 la mot cha analog, khong the setup là output
-//     setup_1_chan("D10", 'X'); // X la mot gia tri khong hop le
-//     setup_1_chan("B5", 'I');  // B5 la mot ten chan khong hop le
+int main() {
+    // Sử dụng hàm:
+    setup_1_chan("D2", 'I');
+    setup_1_chan("A3", 'I');
+    setup_1_chan("D9", 'O');
+    setup_1_chan("A4", 'O');  // A4 la mot cha analog, khong the setup là output
+    setup_1_chan("D10", 'X'); // X la mot gia tri khong hop le
+    setup_1_chan("B5", 'I');  // B5 la mot ten chan khong hop le
 
-//     return 0;
-// }
+    return 0;
+}
