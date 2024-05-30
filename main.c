@@ -2,10 +2,10 @@
 #include "lib/millis.h"
 #include "lib/gpio.h"
 #include "lib/uart.h"
-// #include "lib/Ultrasonic.h"
+#include "lib/Ultrasonic.h"
 // #include "lib/DCMotor.h"
 
-#include <delay.h>
+
 
 unsigned long current_time;
 unsigned long time1=0;
@@ -15,6 +15,9 @@ unsigned long time4=0;
 unsigned long time5=0;
 
 int s = 0;
+int distance = 0;
+int Echo = 2;
+int Trig = 13;
 
 int Timer(unsigned long *time, int wait){
     current_time = millis();
@@ -30,26 +33,32 @@ int Timer(unsigned long *time, int wait){
 void led(){
     if (s==0){
         s=1;
-        digitalWrite(13, HIGH);
+        digitalWrite(10, HIGH);
     }else{
         s=0;
-        digitalWrite(13, LOW);
+        digitalWrite(10, LOW);
     }
 }
 
 void main(void)
 {   
+    char buffer[20];
     init_millis(16000000);
     uart_init(9600);
-    pinMode(13, OUTPUT);
+    init_ultrasonic(Echo, Trig);
+    pinMode(10, OUTPUT);
     while (1)
     {
-        if (Timer(&time1, 500)){
+        if (Timer(&time1, 200)){
             led();
-            putstring("Hello, world!\n");
+            distance = ultrasonic(Echo , Trig);
+            floatToString(distance, buffer, 1);
+            putstring(buffer);
         }
     
     }
 }
+
+
 
 
