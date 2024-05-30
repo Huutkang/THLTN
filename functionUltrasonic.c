@@ -22,14 +22,15 @@ long pulseIn(int pin, int value) {
 }
 
 int ultrasonic() {
+    long t;
+    long cm;
     PORTC &= ~(1 << Trig);  // digitalWrite(Trig, LOW);
     delay_us(4);            // delayMicroseconds(4);
     PORTC |= (1 << Trig);   // digitalWrite(Trig, HIGH);
     delay_us(10);           // delayMicroseconds(10);
     PORTC &= ~(1 << Trig);  // digitalWrite(Trig, LOW);
-
-    long t = pulseIn(Echo, 1);
-    long cm = t / 29 / 2;   // time convert distance
+    t = pulseIn(Echo, 1);
+    cm = t / 29 / 2;   // time convert distance
     return cm;
 }
 
