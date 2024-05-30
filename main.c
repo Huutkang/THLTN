@@ -40,11 +40,13 @@ void led(){
 void main(void)
 {   
     init_millis(16000000);
+    uart_init(9600);
     pinMode(13, OUTPUT);
     while (1)
     {
-        if (Timer(&time1, 30)){
+        if (Timer(&time1, 500)){
             led();
+            putstring("Hello, world!\n");
         }
     
     }

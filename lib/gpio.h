@@ -1,5 +1,5 @@
-#ifndef DIGITAL_IO_H
-#define DIGITAL_IO_H
+#ifndef GPIO_H
+#define GPIO_H
 #include <mega328p.h>
 
 
@@ -87,4 +87,4 @@ void digitalWrite(int pin, int value) {
     }
 }
 
-#endif // DIGITAL_IO_H
+#endif 

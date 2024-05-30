@@ -1,3 +1,4 @@
+#ifndef _MILLIS_H_
 #define _MILLIS_H_
 
 unsigned long millis_value = 0;
@@ -23,3 +24,4 @@ unsigned long millis (void){
     return millis_return;         
 }
 
+#endif
