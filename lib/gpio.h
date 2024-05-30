@@ -1,72 +1,90 @@
+#ifndef DIGITAL_IO_H
+#define DIGITAL_IO_H
 #include <mega328p.h>
-#include <avr/io.h>
 
-// Ham chuyen chan so thanh cong va bit tuong ung
-uint8_t digitalPinToPort(uint8_t pin);
-uint8_t digitalPinToBitMask(uint8_t pin);
 
-int digitalRead(uint8_t pin) {
-    uint8_t bit = digitalPinToBitMask(pin);
-    uint8_t port = digitalPinToPort(pin);
+#define LOW 0
+#define HIGH 1
 
-    // Xac dinh cong va doc gia tri tu thanh ghi PIN cua cong do
-    if (port == NOT_A_PIN) return LOW;
+#define INPUT 0
+#define OUTPUT 1
 
-    // Doc gia tri tu cong tuong ung
-    if (*portInputRegister(port) & bit) return HIGH;
-    return LOW;
-}
 
-void digitalWrite(uint8_t pin, uint8_t value) {
-    uint8_t bit = digitalPinToBitMask(pin);
-    uint8_t port = digitalPinToPort(pin);
-    volatile uint8_t *out;
-
-    // Xac dinh cong va lay con tro toi thanh ghi PORT tuong ung
-    if (port == NOT_A_PIN) return;
-    out = portOutputRegister(port);
-
-    // Dat hoac xoa bit tuong ung trong thanh ghi PORT
-    if (value == LOW) {
-        *out &= ~bit;
+void pinMode(int pin, int mode){
+    if (mode){
+        if (pin<0){}
+        else if (pin < 8) {
+            DDRD |= 1 << pin; 
+        } else if (pin < 14) {
+            pin -= 8;
+            DDRB |= 1 << pin; 
+        }
+        
     } else {
-        *out |= bit;
+        if (pin<0){}
+        else if (pin < 8) {
+            DDRD &= ~(1 << pin); 
+            PORTD |= 1 << pin; 
+        } else if (pin < 14) {
+            pin -= 8;
+            DDRB &= ~(1 << pin); 
+            PORTB |= 1 << pin; 
+        }
     }
 }
 
-// Ham chuyen chan so thanh cong
-uint8_t digitalPinToPort(uint8_t pin) {
-    if (pin >= 0 && pin <= 7) return PORT_D;
-    if (pin >= 8 && pin <= 13) return PORT_B;
-    if (pin >= 14 && pin <= 19) return PORT_C;
-    return NOT_A_PIN;
-}
-
-// Ham chuyen chan so thanh bit mask
-uint8_t digitalPinToBitMask(uint8_t pin) {
-    if (pin >= 0 && pin <= 7) return (1 << pin);
-    if (pin >= 8 && pin <= 13) return (1 << (pin - 8));
-    if (pin >= 14 && pin <= 19) return (1 << (pin - 14));
-    return 0;
-}
-
-// Ham tra ve con tro toi thanh ghi PIN cua cong
-volatile uint8_t* portInputRegister(uint8_t port) {
-    switch (port) {
-        case PORT_B: return &PINB;
-        case PORT_C: return &PINC;
-        case PORT_D: return &PIND;
-        default: return NULL;
+int digitalRead(int pin) {
+    if (pin<0){
+        return -1;
+        }
+    else if (pin < 8) {
+        switch (pin){
+            case 0: return PIND.0;
+            case 1: return PIND.1;
+            case 2: return PIND.2;
+            case 3: return PIND.3;
+            case 4: return PIND.4;
+            case 5: return PIND.5;
+            case 6: return PIND.6;
+            case 7: return PIND.7;
+        } 
+    } else if (pin < 14) {
+        pin -= 8;
+        switch (pin){
+            case 0: return PIND.0;
+            case 1: return PIND.1;
+            case 2: return PIND.2;
+            case 3: return PIND.3;
+            case 4: return PIND.4;
+            case 5: return PIND.5;
+            case 6: return PIND.6;
+            case 7: return PIND.7;
+        }
+    }
+    else{
+        return -1;
     }
 }
 
-void main(void)
-{
-while (1)
-    {
-    // Please write your application code here
-
+void digitalWrite(int pin, int value) {
+    if (value){
+        if (pin<0){}
+        else if (pin < 8) {
+            PORTD |= 1 << pin; 
+        } else if (pin < 14) {
+            pin -= 8;
+            PORTB |= 1 << pin; 
+        }
+        
+    } else {
+        if (pin<0){}
+        else if (pin < 8) {
+            PORTD &= ~(1 << pin); 
+        } else if (pin < 14) {
+            pin -= 8;
+            PORTB &= ~(1 << pin); 
+        }
     }
 }
 
-
+#endif // DIGITAL_IO_H
