@@ -1,52 +1,63 @@
-#include "Motor.h"
+#include "motor.h"
 
-// Bien luu tru trang thai cua dong co
-static unsigned long previousMillis = 0; 
-static int interval = 1000; // Khoang thoi gian mac dinh giua cac trang thai la 1 giay
-static int currentCmd = RELEASE; // Khoi tao dong co o trang thai dung
+// Khoi tao PWM (Pulse Width Modulation)
+void pwm_init() {
+    // Chon che do Fast PWM voi non-inverting mode
+    TCCR0A |= (1 << WGM01) | (1 << WGM00) | (1 << COM0A1);
+    // Chon Prescaler la 64
+    TCCR0B |= (1 << CS01) | (1 << CS00);
+}
 
 // Ham khoi tao dong co
-void motor_init(void) {
-  DDRB |= (1 << IN1) | (1 << IN2) | (1 << EN); // Dat cac chan IN1, IN2, EN la OUTPUT
+void motor_init(Motor *motor, unsigned char in1Pin, unsigned char in2Pin, unsigned char enPin) {
+    motor->in1Pin = in1Pin;
+    motor->in2Pin = in2Pin;
+    motor->enPin = enPin;
+    motor->previousMicros = 0;
+    motor->currentCmd = RELEASE; // Khoi tao o trang thai dung
+
+    // Dat cac chan la OUTPUT
+    DDRB |= (1 << motor->in1Pin) | (1 << motor->in2Pin) | (1 << motor->enPin);
+
+    // Dat dong co o trang thai dung
+    PORTB &= ~((1 << motor->in1Pin) | (1 << motor->in2Pin));
+    OCR0A = 0; // Dat PWM ve 0
+
+    // Khoi tao PWM
+    pwm_init();
 }
 
 // Ham dat toc do dong co (0-255)
 void motor_setSpeed(int speed) {
-  // Thuc hien PWM tai day (ban can tu viet code PWM cho ATmega328P)
-  // Vi du su dung Timer0:
-  OCR0A = speed; // Dat gia tri PWM
-  TCCR0A |= (1 << COM0A1); // Che do PWM khong dao xung
-  TCCR0A |= (1 << WGM00) | (1 << WGM01); // Che do Fast PWM
-  TCCR0B |= (1 << CS01); // Prescaler 8
+    OCR0A = speed; // Su dung Timer0 cho PWM
 }
 
 // Ham dieu khien chieu quay cua dong co
-void motor_run(int cmd) {
-  currentCmd = cmd; // Luu lai lenh moi
-  previousMillis = millis(); // Cap nhat thoi gian bat dau thuc hien lenh
+void motor_run(Motor *motor, int cmd) {
+    motor->currentCmd = cmd;
+    motor->previousMicros = micros(); // Lay thoi gian hien tai
+
+    switch (cmd) {
+        case FORWARD:
+            PORTB |= (1 << motor->in1Pin);
+            PORTB &= ~(1 << motor->in2Pin);
+            break;
+        case BACKWARD:
+            PORTB &= ~(1 << motor->in1Pin);
+            PORTB |= (1 << motor->in2Pin);
+            break;
+        case RELEASE:
+            PORTB &= ~((1 << motor->in1Pin) | (1 << motor->in2Pin));
+            break;
+    }
 }
 
-// Ham cap nhat trang thai dong co (nen duoc goi trong vong lap loop())
-void motor_update(void) {
-  unsigned long currentMillis = millis(); // Lay thoi gian hien tai
-
-  // Kiem tra xem da du thoi gian de chuyen trang thai chua
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis; // Cap nhat lai thoi gian truoc do
-
-    switch (currentCmd) { // Thuc hien lenh dieu khien dong co
-      case FORWARD:
-        PORTB |= (1 << IN1);
-        PORTB &= ~(1 << IN2);
-        break;
-      case BACKWARD:
-        PORTB &= ~(1 << IN1);
-        PORTB |= (1 << IN2);
-        break;
-      case RELEASE:
-        PORTB &= ~(1 << IN1);
-        PORTB &= ~(1 << IN2);
-        break;
+// Ham cap nhat trang thai dong co (nen duoc goi trong vong lap while(1))
+void motor_update(Motor *motor) {
+    unsigned long currentMicros = micros();
+    // Kiem tra xem da du thoi gian de chuyen trang thai chua
+    if (currentMicros - motor->previousMicros >= 10000) { // Chu ki cap nhat 10ms
+        motor->previousMicros = currentMicros;
+        motor_run(motor, motor->currentCmd); // Cap nhat lai trang thai dong co
     }
-  }
 }
