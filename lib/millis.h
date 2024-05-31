@@ -16,6 +16,7 @@ void init_millis(unsigned long f_cpu){
     TIMSK1 |= (1 << OCIE1A);
     #asm("sei")
 }
+
 unsigned long millis (void){
     unsigned long millis_return;
     #asm("cli")
@@ -25,3 +26,4 @@ unsigned long millis (void){
 }
 
 #endif
+

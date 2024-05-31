@@ -30,7 +30,7 @@ float ultrasonic(int Echo, int Trig) {
     delay_us(10);
     digitalWrite(Trig, LOW);
     t = pulseIn(Echo, 1);
-    cm = (0.034*t)/2;   // time convert distance
+    cm = (t/2.9)/2;   // time convert distance
     return cm;
 }
 
