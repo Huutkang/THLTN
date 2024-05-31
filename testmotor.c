@@ -1,57 +1,56 @@
-#include "Motor.h"
+#include <mega328p.h>
+#include "millis.h" // Đảm bảo bạn đã thêm thư viện millis.h vào project
+#include "motor.h"
 
-// Khai b�o 4 d?i tu?ng Motor, m?i d?i tu?ng d?i di?n cho 1 d?ng co
-Motor motor1(1); 
-Motor motor2(2);
-Motor motor3(3);
-Motor motor4(4);
+// Khai báo 4 biến Motor
+Motor motor1, motor2, motor3, motor4;
 
-void main() {
-  motor_init(); // Kh?i t?o c�c ch�n di?u khi?n cho c? 4 d?ng co
+// Biến để lưu thời gian bắt đầu
+unsigned long startTime;
 
-  while (1) {
-    // Test quay thu?n t?t c? c�c d?ng co
-    motor1.setSpeed(200); // �?t t?c d? cho d?ng co 1 l� 200
-    motor2.setSpeed(200); // �?t t?c d? cho d?ng co 2 l� 200
-    motor3.setSpeed(200); // �?t t?c d? cho d?ng co 3 l� 200
-    motor4.setSpeed(200); // �?t t?c d? cho d?ng co 4 l� 200
+// Hàm khởi tạo (chạy một lần khi bắt đầu)
+void main(void) {
+    // Khởi tạo các động cơ, điều chỉnh chân cho phù hợp với mạch của bạn:
+    motor_init(&motor1, 8, 9, 10);  // IN1, IN2, EN cho motor1
+    motor_init(&motor2, 11, 12, 13); // IN1, IN2, EN cho motor2
+    motor_init(&motor3, 5, 6, 7);   // IN1, IN2, EN cho motor3
+    motor_init(&motor4, 2, 3, 4);   // IN1, IN2, EN cho motor4
 
-    motor1.run(FORWARD);  // Y�u c?u d?ng co 1 quay thu?n
-    motor2.run(FORWARD);  // Y�u c?u d?ng co 2 quay thu?n
-    motor3.run(FORWARD);  // Y�u c?u d?ng co 3 quay thu?n
-    motor4.run(FORWARD);  // Y�u c?u d?ng co 4 quay thu?n
+    while (1) {
+        // Điều khiển động cơ theo ý muốn của bạn ở đây
 
-    motor1.update(); // C?p nh?t tr?ng th�i d?ng co 1
-    motor2.update(); // C?p nh?t tr?ng th�i d?ng co 2
-    motor3.update(); // C?p nh?t tr?ng th�i d?ng co 3
-    motor4.update(); // C?p nh?t tr?ng th�i d?ng co 4
+        // Ví dụ: Cho 4 động cơ chạy tiến trong 2 giây, sau đó dừng lại
+        motor_run(&motor1, FORWARD);
+        motor_run(&motor2, FORWARD);
+        motor_run(&motor3, FORWARD);
+        motor_run(&motor4, FORWARD);
+        motor_setSpeed(200); // Đặt tốc độ (0-255)
 
-    delay_ms(2000); // Ch? 2 gi�y d? quan s�t
+        // Lấy thời gian bắt đầu
+        startTime = millis();
 
-    // Test quay ngh?ch t?t c? c�c d?ng co
-    motor1.run(BACKWARD); // Y�u c?u d?ng co 1 quay ngh?ch
-    motor2.run(BACKWARD); // Y�u c?u d?ng co 2 quay ngh?ch
-    motor3.run(BACKWARD); // Y�u c?u d?ng co 3 quay ngh?ch
-    motor4.run(BACKWARD); // Y�u c?u d?ng co 4 quay ngh?ch
+        // Chạy trong 2 giây (kiểm tra thời gian đã trôi qua)
+        while (millis() - startTime < 2000) {
+            // Cập nhật trạng thái động cơ trong khi chờ đợi
+            motor_update(&motor1);
+            motor_update(&motor2);
+            motor_update(&motor3);
+            motor_update(&motor4);
+        }
 
-    motor1.update(); // C?p nh?t tr?ng th�i d?ng co 1
-    motor2.update(); // C?p nh?t tr?ng th�i d?ng co 2
-    motor3.update(); // C?p nh?t tr?ng th�i d?ng co 3
-    motor4.update(); // C?p nh?t tr?ng th�i d?ng co 4
+        motor_run(&motor1, RELEASE);
+        motor_run(&motor2, RELEASE);
+        motor_run(&motor3, RELEASE);
+        motor_run(&motor4, RELEASE);
 
-    delay_ms(2000); // Ch? 2 gi�y d? quan s�t
-
-    // D?ng t?t c? c�c d?ng co trong 1 gi�y
-    motor1.run(RELEASE); // Y�u c?u d?ng co 1 d?ng
-    motor2.run(RELEASE); // Y�u c?u d?ng co 2 d?ng
-    motor3.run(RELEASE); // Y�u c?u d?ng co 3 d?ng
-    motor4.run(RELEASE); // Y�u c?u d?ng co 4 d?ng
-
-    motor1.update(); // C?p nh?t tr?ng th�i d?ng co 1
-    motor2.update(); // C?p nh?t tr?ng th�i d?ng co 2
-    motor3.update(); // C?p nh?t tr?ng th�i d?ng co 3
-    motor4.update(); // C?p nh?t tr?ng th�i d?ng co 4
-
-    delay_ms(1000); // Ch? 1 gi�y
-  }
+        // Dừng trong 1 giây (kiểm tra thời gian đã trôi qua)
+        startTime = millis();
+        while (millis() - startTime < 1000) {
+            // Cập nhật trạng thái động cơ trong khi chờ đợi
+            motor_update(&motor1);
+            motor_update(&motor2);
+            motor_update(&motor3);
+            motor_update(&motor4);
+        }
+    }
 }
