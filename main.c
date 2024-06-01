@@ -4,6 +4,8 @@
 #include "lib/uart.h"
 #include "lib/Ultrasonic.h"
 #include "lib/Motor.h"
+#include <delay.h>
+
 
 #define Echo 2
 #define Trig 13
@@ -52,13 +54,32 @@ void main(void)
     motor_run(TIEN,TIEN,TIEN,TIEN);
     while (1)
     {
-        if (Timer(&time1, 200)){
-            led();
-            distance = ultrasonic(Echo , Trig);
-            floatToString(distance, buffer, 3);
-            putstring(buffer);
-        }
-    
+        // if (Timer(&time1, 200)){
+        //     led();
+        //     distance = ultrasonic(Echo , Trig);
+        //     floatToString(distance, buffer, 3);
+        //     putstring(buffer);
+        // }
+        delay_ms(5000);
+        motor_setSpeed(1, 10);
+        delay_ms(1000);
+        motor_setSpeed(2, 10);
+        delay_ms(1000);
+        motor_setSpeed(3, 10);
+        delay_ms(1000);
+        motor_setSpeed(4, 10);
+        delay_ms(1000);
+        motor_setSpeed(1, 19);
+        delay_ms(1000);
+        motor_setSpeed(2, 0);
+        delay_ms(1000);
+        motor_setSpeed(3, 0);
+        delay_ms(1000);
+        motor_setSpeed(4, 0);
+        delay_ms(1000);
+        motor_setSpeed(1, 5);
+        delay_ms(5000);
+        motor_setSpeed(1, 0);
     }
 }
 
