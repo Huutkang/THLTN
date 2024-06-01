@@ -9,10 +9,10 @@
 #define LUI 1
 #define DUNG 0  
 
-#define pinPWM1 6
-#define pinPWM2 5
-#define pinPWM3 11
-#define pinPWM4 3
+#define pinPWM1 11
+#define pinPWM2 3
+#define pinPWM3 6
+#define pinPWM4 5
 
 #define SH_CP 4
 #define DS 8
@@ -127,8 +127,8 @@ void motor_setSpeed(int mt, int speed){
 void motor_run(int H1, int H2, int H3, int H4){
     int M1 = H1<<4;
     int M2 = ((H2&0b10)<<2)|((H2&0b1)<<6);
-    int M3 = ((H3&0b10)<<6)|((H3&0b1)<<1);
-    int M4 = ((H4&0b10)<<1)|(H4&1);
+    int M3 = ((H3&0b10)<<1)|(H3&1);
+    int M4 = ((H4&0b10)<<6)|((H4&0b1)<<1);
     int M = M1|M2|M3|M4;
     send_data(M);
 }

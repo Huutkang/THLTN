@@ -51,7 +51,7 @@ void main(void)
     init_ultrasonic(Echo, Trig);
     pinMode(10, OUTPUT);
     motor_init();
-    motor_run(TIEN,TIEN,TIEN,TIEN);
+    motor_run(DUNG,TIEN,DUNG,DUNG);
     while (1)
     {
         // if (Timer(&time1, 200)){
@@ -61,25 +61,20 @@ void main(void)
         //     putstring(buffer);
         // }
         delay_ms(5000);
-        motor_setSpeed(1, 10);
-        delay_ms(1000);
         motor_setSpeed(2, 10);
         delay_ms(1000);
-        motor_setSpeed(3, 10);
+        motor_setSpeed(2, 2);
         delay_ms(1000);
-        motor_setSpeed(4, 10);
+        motor_setSpeed(2, 15);
         delay_ms(1000);
-        motor_setSpeed(1, 19);
+        motor_setSpeed(2, 7);
         delay_ms(1000);
         motor_setSpeed(2, 0);
         delay_ms(1000);
-        motor_setSpeed(3, 0);
-        delay_ms(1000);
-        motor_setSpeed(4, 0);
-        delay_ms(1000);
-        motor_setSpeed(1, 5);
+        motor_run(DUNG,LUI,DUNG,DUNG);
+        motor_setSpeed(2, 10);
         delay_ms(5000);
-        motor_setSpeed(1, 0);
+        motor_setSpeed(2, 0);
     }
 }
 
