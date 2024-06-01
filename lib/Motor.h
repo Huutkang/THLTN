@@ -20,10 +20,10 @@
 #define EN 7 
 
 
-int T1 = 0;
-int T2 = 0;
-int T3 = 0;
-int T4 = 0;
+int T1 = 10;
+int T2 = 10;
+int T3 = 10;
+int T4 = 10;
 
 int t_1 = 0;
 int t_2 = 0;

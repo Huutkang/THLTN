@@ -3,6 +3,8 @@
 
 #include <mega328p.h>
 
+
+
 #define FOSC 16000000  // Clock Speed
 
 volatile unsigned char rxdata;
@@ -63,7 +65,7 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
 
 interrupt [USART_RXC] void usart_rx_isr(void) {
     rxdata = UDR0;
-    putchar(rxdata);
 }
 
 #endif
+
