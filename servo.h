@@ -3,8 +3,9 @@
 
 #include <mega328p.h>
 
-void servo_init(uint8_t pin);
-void servo_write(uint8_t angle);
-uint8_t servo_read();
+// Cac ham dieu khien servo
+void servo_init(volatile uint8_t *port, uint8_t pin); // Khoi tao voi port va pin
+void servo_set_angle(unsigned char angle);
+void servo_update(void);
 
-#endif
+#endif /* SERVO_H_ */
