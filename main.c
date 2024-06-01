@@ -5,6 +5,8 @@
 #include "lib/Ultrasonic.h"
 #include "lib/Motor.h"
 
+#define Echo 2
+#define Trig 13
 
 
 unsigned long current_time;
@@ -16,8 +18,7 @@ unsigned long time1=0;
 
 int s = 0;
 int distance = 0;
-int Echo = 2;
-int Trig = 13;
+
 
 int Timer(unsigned long *time, int wait){
     current_time = millis();
@@ -30,15 +31,15 @@ int Timer(unsigned long *time, int wait){
     }
 }
 
-// void led(){
-//     if (s==0){
-//         s=1;
-//         digitalWrite(10, HIGH);
-//     }else{
-//         s=0;
-//         digitalWrite(10, LOW);
-//     }
-// }
+void led(){
+    if (s==0){
+        s=1;
+        digitalWrite(10, HIGH);
+    }else{
+        s=0;
+        digitalWrite(10, LOW);
+    }
+}
 
 void main(void)
 {   
@@ -48,14 +49,15 @@ void main(void)
     init_ultrasonic(Echo, Trig);
     pinMode(10, OUTPUT);
     motor_init();
+    motor_run(TIEN,TIEN,TIEN,TIEN);
     while (1)
     {
-        // if (Timer(&time1, 200)){
-        //     // led();
-        //     // distance = ultrasonic(Echo , Trig);
-        //     // floatToString(distance, buffer, 3);
-        //     // putstring(buffer);
-        // }
+        if (Timer(&time1, 200)){
+            led();
+            distance = ultrasonic(Echo , Trig);
+            floatToString(distance, buffer, 3);
+            putstring(buffer);
+        }
     
     }
 }
