@@ -62,8 +62,18 @@ void control(){
         motor_setSpeed(4, 10);
     }
     else if (rxdata=='L'){
+        motor_run(LUI,TIEN,TIEN,LUI);
+        motor_setSpeed(2, 5);
+        motor_setSpeed(3, 5);
+        motor_setSpeed(1, 5);
+        motor_setSpeed(4, 5);
     }
     else if (rxdata=='R'){
+        motor_run(TIEN,LUI,LUI,TIEN);
+        motor_setSpeed(2, 5);
+        motor_setSpeed(3, 5);
+        motor_setSpeed(1, 5);
+        motor_setSpeed(4, 5);
     }
     else if (rxdata=='T'){
         motor_run(TIEN,TIEN,TIEN,TIEN);
