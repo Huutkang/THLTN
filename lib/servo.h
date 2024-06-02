@@ -6,7 +6,7 @@
 #define pinPWM 9
 
 
-int T = 150;
+int T_ = 150;
 int t = 0;
 int n = 0;
 
@@ -20,7 +20,7 @@ interrupt [TIM2_COMPA] void timer2_compa_isr(void) {
         }
         n++;
     }
-    else if (t>=T){
+    else if (t>=T_){
         digitalWrite(pinPWM, LOW);
     }
     t++;
@@ -33,7 +33,7 @@ void servo_write(int value){
     if (value>250){
         value = 250;
     }
-    T = value;
+    T_ = value;
     TIMSK2 = (1 << OCIE2A);
     #asm("sei")
 }

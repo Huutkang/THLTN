@@ -1,25 +1,23 @@
 #include <mega328p.h>
 #include "lib/millis.h"
-#include "lib/gpio.h"
 #include "lib/uart.h"
-// #include "lib/Ultrasonic.h"
-#include "lib/servo.c"
+#include "lib/Ultrasonic.h"
 #include "lib/Motor.h"
+#include "lib/servo.h"
 #include <delay.h>
 
 
 #define Echo 2
 #define Trig 10
-
+#define pinServo 9
 
 unsigned long current_time;
 unsigned long time1=0;
-// unsigned long time2=0;
+unsigned long time2=0;
 // unsigned long time3=0;
 // unsigned long time4=0;
 // unsigned long time5=0;
 
-int s = 0;
 int distance = 0;
 
 
@@ -34,6 +32,19 @@ int Timer(unsigned long *time, int wait){
     }
 }
 
+// Len: U
+// Xuong: D
+// Trai: L 
+// Phai: R 
+// khong nhan gi: S 
+// Len, Trai: T 
+// Len, Phai: F 
+// Xuong, Trai: H
+// Xuong, Phai: G 
+// nut 1 off->on: 1 
+// nut 1 on->off: 2 
+// nut 2 off->on: 3
+// nut 2 on->off: 4
 
 void control(){
     if (rxdata=='U'){
@@ -98,16 +109,27 @@ void main(void)
     char buffer[20];
     init_millis(16000000);
     uart_init(9600);
-    // init_ultrasonic(Echo, Trig);
-    pinMode(10, OUTPUT);
+    init_ultrasonic(Echo, Trig);
     motor_init();
+    servo_init();
+    servo_write(250);
     delay_ms(1000);
+    servo_write(50);
+    delay_ms(500);
+    servo_write(150);
     while (1)
     {
         if (Timer(&time1,100)){
             control();
         }
-    
+        if (Timer(&time2, 500)){
+            distance = ultrasonic(Echo , Trig);
+            floatToString(distance, buffer, 1);
+            putstring(buffer);
+        }
+        // if (Timer(&time3,100)){
+        //     function();
+        // }
     }
 }
 

@@ -7,7 +7,7 @@ A=Freeware, for evaluation and
 C=
 D=28/05/2024 3:52:42 CH
 Files=1
-OpenedFiles=1
+OpenedFiles=4
 AllowDisplayFunctionCallTree=1
 CleanUp=2
 DebugOutputListFilesDirectory=Debug\List
@@ -20,13 +20,13 @@ OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
 ActiveTab=1
 OF1=main.c
-TimeStamp1=1489109155
-OF2=lib\Motor.h
-TimeStamp2=1488961095
-OF3=lib\Motor.h
-TimeStamp3=1488892847
-OF4=lib\pinMode.h
-TimeStamp4=1488826140
+TimeStamp1=1489147013
+OF2=lib\uart.h
+TimeStamp2=1489077206
+OF3=lib\gpio.h
+TimeStamp3=1488890619
+OF4=lib\Ultrasonic.h
+TimeStamp4=1489146499
 F1=main.c
 non-commercial use only
 [CompilerDebug]
@@ -136,9 +136,9 @@ UseBootAppXmega=0
 UseUDSC_LGT8F=0
 RebuildAll=0
 LinkageInformationPresent=1
-COFFileTimeStamp=1489109169
-Build=208
-GlobalVarAddr=785
+COFFileTimeStamp=1489147065
+Build=288
+GlobalVarAddr=797
 EEPROMVarAddr=0
 [DefinedSymbolsDebug]
 Count=0
@@ -250,7 +250,7 @@ UseUDSC_LGT8F=0
 RebuildAll=1
 LinkageInformationPresent=0
 COFFileTimeStamp=-1
-Build=208
+Build=288
 IncludePath0=C:\Other Program Files\cvavreval\inc
 IncludePath1=
 IncludePath2=
@@ -508,9 +508,9 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1489110702
+TimeStamp=1489147016
 [BookmarksFoldedCode]
-Files=10
+Files=11
 F1=main.c
 F2=lib\gpio.h
 F3=AFMotor.h
@@ -521,12 +521,13 @@ F7=lib\uart.h
 F8=lib\DCMotor.h
 F9=lib\Motor.h
 F10=Debug\List\main.asm
+F11=lib\servo.h
 [Bookmarks1]
-TimeStamp=1489109155
-Row=59
-Column=42
+TimeStamp=1489147014
+Row=0
+Column=0
 ScrollPosX=0
-ScrollPosY=51
+ScrollPosY=0
 BK0=-1
 BK1=-1
 BK2=-1
@@ -538,11 +539,11 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks2]
-TimeStamp=1488877313
+TimeStamp=1488890619
 Row=35
 Column=0
 ScrollPosX=0
-ScrollPosY=20
+ScrollPosY=9
 BK0=-1
 BK1=-1
 BK2=-1
@@ -570,10 +571,10 @@ L13=Enhanced function parameters passing: Mode 2
 L14=Automatic register allocation: Yes
 L15=Smart register allocation: Yes
 L16=
-L17=Build: 208
-L18=3399 line(s) compiled
+L17=Build: 288
+L18=2112 line(s) compiled
 L19=No errors
-L20=15 warning(s)
+L20=No warnings
 L21=
 L22=Bit variables size: 0 byte(s)
 L23=
@@ -581,30 +582,30 @@ L24=Data Stack area: 0x100 to 0x2FF
 L25=Data Stack size: 512 byte(s)
 L26=Estimated Data Stack usage: 72 byte(s)
 L27=
-L28=RAM Global variables area: 0x300 to 0x310
-L29=RAM Global variables size: 17 byte(s)
+L28=RAM Global variables area: 0x300 to 0x31C
+L29=RAM Global variables size: 29 byte(s)
 L30=
-L31=Hardware Stack area: 0x311 to 0x8FF
-L32=Hardware Stack size: 1519 byte(s)
+L31=Hardware Stack area: 0x31D to 0x8FF
+L32=Hardware Stack size: 1507 byte(s)
 L33=
 L34=Heap size: 0 byte(s)
 Lines=38
 L35=
 L36=EEPROM usage: 0 byte(s), 0,0% of EEPROM
-L37=Program size: 1204 words (2408 bytes), 7,3% of FLASH
-L38=198 words (396 bytes), 14,1% reduced by Code Compression
+L37=Program size: 2228 words (4456 bytes), 13,6% of FLASH
+L38=262 words (524 bytes), 10,5% reduced by Code Compression
 [BuildInfoAssembler]
 Lines=12
 L1=AVRASM: AVR macro assembler 2.1.30 (build 592 Nov  7 2008 12:38:17)
 L2=Copyright (C) 1995-2008 ATMEL Corporation
 L3=
-L4=D:\code\THLTN\cuối kì\THLTN\Debug\List\main.asm(2965): No EEPROM data, deleting D:\code\THLTN\cuối kì\THLTN\Debug\Exe\main.eep
+L4=D:\code\THLTN\cuối kì\THLTN\Debug\List\main.asm(4176): No EEPROM data, deleting D:\code\THLTN\cuối kì\THLTN\Debug\Exe\main.eep
 L5=
 L6=ATmega328P memory use summary [bytes]:
 L7=Segment   Begin    End      Code   Data   Used    Size   Use%
 L8=---------------------------------------------------------------
-L9=[.cseg] 0x000000 0x000968   2388     20   2408   32768   7.3%
-L10=[.dseg] 0x000100 0x000311      0     17     17    2048   0.8%
+L9=[.cseg] 0x000000 0x001168   4428     28   4456   32768  13.6%
+L10=[.dseg] 0x000100 0x00031d      0     29     29    2048   1.4%
 L11=[.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 L12=
 [Bookmarks3]
@@ -642,11 +643,11 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks5]
-TimeStamp=1488882164
-Row=25
-Column=102
+TimeStamp=1489146499
+Row=23
+Column=0
 ScrollPosX=0
-ScrollPosY=0
+ScrollPosY=3
 BK0=-1
 BK1=-1
 BK2=-1
@@ -676,11 +677,11 @@ BK9=-1
 [FoldedCode4]
 Blocks=0
 [Bookmarks7]
-TimeStamp=1488826099
-Row=30
-Column=73
+TimeStamp=1489077206
+Row=34
+Column=0
 ScrollPosX=0
-ScrollPosY=13
+ScrollPosY=19
 BK0=-1
 BK1=-1
 BK2=-1
@@ -691,13 +692,7 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
-[FoldedCode7]
-Blocks=0
-[FoldedCode2]
-Blocks=0
 [FoldedCode6]
-Blocks=0
-[FoldedCode5]
 Blocks=0
 [Bookmarks8]
 TimeStamp=1488892008
@@ -734,11 +729,11 @@ BK7=-1
 BK8=-1
 BK9=-1
 [Bookmarks10]
-TimeStamp=1488960627
-Row=1689
-Column=176
+TimeStamp=1489146656
+Row=0
+Column=0
 ScrollPosX=0
-ScrollPosY=1116
+ScrollPosY=1955
 BK0=-1
 BK1=-1
 BK2=-1
@@ -749,24 +744,47 @@ BK6=-1
 BK7=-1
 BK8=-1
 BK9=-1
-[FoldedCode10]
-Blocks=0
 [FoldedCode9]
 Blocks=0
+[Bookmarks11]
+TimeStamp=1489146609
+Row=30
+Column=32
+ScrollPosX=0
+ScrollPosY=0
+BK0=-1
+BK1=-1
+BK2=-1
+BK3=-1
+BK4=-1
+BK5=-1
+BK6=-1
+BK7=-1
+BK8=-1
+BK9=-1
+[FoldedCode11]
+Blocks=0
+[FoldedCode10]
+Blocks=0
 [FoldedCode1]
+Blocks=0
+[FoldedCode5]
+Blocks=0
+[FoldedCode2]
+Blocks=0
+[FoldedCode7]
 Blocks=0
 [HeadersList]
 Files=1
 F1=D:\code\THLTN\cuối kì\THLTN\main.c
 [Header1]
-Files=10
+Files=9
 F1=C:\Other Program Files\cvavreval\inc\mega328p.h
 F2=C:\Other Program Files\cvavreval\inc\mega328p_bits.h
 F3=lib\millis.h
-F4=lib\gpio.h
-F5=lib\uart.h
-F6=lib\servo.c
-F7=lib\servo.h
-F8=C:\Other Program Files\cvavreval\inc\io.h
-F9=C:\Other Program Files\cvavreval\inc\delay.h
-F10=lib\Motor.h
+F4=lib\uart.h
+F5=lib\Ultrasonic.h
+F6=C:\Other Program Files\cvavreval\inc\delay.h
+F7=lib\gpio.h
+F8=lib\Motor.h
+F9=lib\servo.h
