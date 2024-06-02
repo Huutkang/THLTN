@@ -3,6 +3,7 @@
 #include "lib/gpio.h"
 #include "lib/uart.h"
 // #include "lib/Ultrasonic.h"
+#include "lib/servo.c"
 #include "lib/Motor.h"
 #include <delay.h>
 
