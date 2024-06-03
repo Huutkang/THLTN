@@ -123,7 +123,7 @@ void main(void)
     char buffer[20];
     init_millis(16000000);
     uart_init(9600);
-    // init_ultrasonic(Echo, Trig);
+    init_ultrasonic(Echo, Trig);
     motor_init();
     servo_init();
     delay_ms(3000);
