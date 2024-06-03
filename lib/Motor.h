@@ -85,12 +85,12 @@ void send_data(unsigned int data_out){
             digitalWrite(DS,LOW);
         }
         digitalWrite(SH_CP, HIGH);
-        delay_us(1);
+        delay_us(2);
         digitalWrite(SH_CP, LOW);
-        delay_us(1);
+        delay_us(2);
     }
     digitalWrite(ST_CP, HIGH);
-    delay_us(1);
+    delay_us(2);
     digitalWrite(ST_CP, LOW);
 }
 

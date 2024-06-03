@@ -8,6 +8,8 @@
 #define FOSC 16000000  // Clock Speed
 
 volatile unsigned char rxdata;
+int dem = 0;
+
 
 void uart_init(unsigned int baudrate) {
     unsigned int n = FOSC / baudrate / 16 - 1;
@@ -65,6 +67,7 @@ void floatToString(float num, char* buffer, int decimalPlaces) {
 
 interrupt [USART_RXC] void usart_rx_isr(void) {
     rxdata = UDR0;
+    dem++;
 }
 
 #endif

@@ -14,12 +14,11 @@
 unsigned long current_time;
 unsigned long time1=0;
 unsigned long time2=0;
-// unsigned long time3=0;
+unsigned long time3=0;
 // unsigned long time4=0;
 // unsigned long time5=0;
 
 int distance = 0;
-
 
 int Timer(unsigned long *time, int wait){
     current_time = millis();
@@ -53,6 +52,7 @@ void control(){
         motor_setSpeed(2, 10);
         motor_setSpeed(3, 10);
         motor_setSpeed(4, 10);
+        putstring("len\n");
     }
     else if (rxdata=='D'){
         motor_run(LUI,LUI,LUI,LUI);
@@ -60,20 +60,23 @@ void control(){
         motor_setSpeed(2, 10);
         motor_setSpeed(3, 10);
         motor_setSpeed(4, 10);
+        putstring("xuong\n");
     }
     else if (rxdata=='L'){
         motor_run(LUI,TIEN,TIEN,LUI);
-        motor_setSpeed(2, 5);
-        motor_setSpeed(3, 5);
-        motor_setSpeed(1, 5);
-        motor_setSpeed(4, 5);
+        motor_setSpeed(2, 7);
+        motor_setSpeed(3, 7);
+        motor_setSpeed(1, 7);
+        motor_setSpeed(4, 7);
+        putstring("trai\n");
     }
     else if (rxdata=='R'){
         motor_run(TIEN,LUI,LUI,TIEN);
-        motor_setSpeed(2, 5);
-        motor_setSpeed(3, 5);
-        motor_setSpeed(1, 5);
-        motor_setSpeed(4, 5);
+        motor_setSpeed(2, 7);
+        motor_setSpeed(3, 7);
+        motor_setSpeed(1, 7);
+        motor_setSpeed(4, 7);
+        putstring("phai\n");
     }
     else if (rxdata=='T'){
         motor_run(TIEN,TIEN,TIEN,TIEN);
@@ -112,6 +115,7 @@ void control(){
     else{
         motor_run(DUNG,DUNG,DUNG,DUNG);
     }
+    
 }
 
 void main(void)
@@ -122,24 +126,25 @@ void main(void)
     init_ultrasonic(Echo, Trig);
     motor_init();
     servo_init();
-    servo_write(250);
-    delay_ms(1000);
-    servo_write(50);
-    delay_ms(500);
+    delay_ms(5000);
     servo_write(150);
     while (1)
     {
         if (Timer(&time1,100)){
             control();
         }
-        if (Timer(&time2, 500)){
+        if (Timer(&time2, 300)){
             distance = ultrasonic(Echo , Trig);
             floatToString(distance, buffer, 1);
             putstring(buffer);
         }
-        // if (Timer(&time3,100)){
-        //     function();
-        // }
+        if (Timer(&time3,400)){
+            if (dem<1){
+                motor_run(DUNG,DUNG,DUNG,DUNG);
+                rxdata='S';
+            }
+            dem = 0;
+        }
     }
 }
 
