@@ -123,14 +123,18 @@ void main(void)
     char buffer[20];
     init_millis(16000000);
     uart_init(9600);
-    init_ultrasonic(Echo, Trig);
+    // init_ultrasonic(Echo, Trig);
     motor_init();
     servo_init();
-    delay_ms(5000);
+    delay_ms(3000);
+    servo_write(100);
+    delay_ms(1000);
+    servo_write(200);
+    delay_ms(1000);
     servo_write(150);
     while (1)
     {
-        if (Timer(&time1,100)){
+        if (Timer(&time1,200)){
             control();
         }
         if (Timer(&time2, 300)){
