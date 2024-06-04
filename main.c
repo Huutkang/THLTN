@@ -10,15 +10,19 @@
 #define Echo 2
 #define Trig 10
 #define pinServo 9
+#define PMODE 13
 
 unsigned long current_time;
 unsigned long time1=0;
 unsigned long time2=0;
 unsigned long time3=0;
-// unsigned long time4=0;
+unsigned long time4=0;
 // unsigned long time5=0;
 
 int distance = 0;
+int mode = 0;
+float Left;
+float Right;
 
 int Timer(unsigned long *time, int wait){
     current_time = millis();
@@ -112,42 +116,83 @@ void lui_re_phai(){
     motor_setSpeed(1, 10);
     motor_setSpeed(4, 10);
 }
+
+void dung(){
+    motor_run(DUNG,DUNG,DUNG,DUNG);
+}
+
+int nhinphai() {
+    servo_write(70);
+    delay_ms(300);
+    return ultrasonic(Echo, Trig);
+}
+int nhintrai() {
+    servo_write(230);
+    delay_ms(300);
+    return ultrasonic(Echo, Trig);
+}
+
 void control(){
     if (rxdata=='U'){
         tien();
-    }
-    else if (rxdata=='D'){
+    }else if (rxdata=='D'){
         lui();
-    }
-    else if (rxdata=='L'){
+    }else if (rxdata=='L'){
         quaytrai();
-    }
-    else if (rxdata=='R'){
+    }else if (rxdata=='R'){
         quayphai();
-    }
-    else if (rxdata=='T'){
+    }else if (rxdata=='T'){
         tien_re_trai();
-
     }else if (rxdata=='F'){
         tien_re_phai();
     }else if (rxdata=='H'){
         lui_re_trai();
     }else if (rxdata=='G'){
         lui_re_phai();
-    }
-    else if (rxdata=='1'){
-    }
-    else if (rxdata=='2'){
-    }
-    else if (rxdata=='3'){
-    }
-    else if (rxdata=='4'){
-    }
-    else{
+    }else if (rxdata=='1'){
+        mode = 2;
+    }else if (rxdata=='2'){
+        mode = 2;
+    }else if (rxdata=='3'){
+    }else if (rxdata=='4'){
+    }else{
         motor_run(DUNG,DUNG,DUNG,DUNG);
     }
-    
 }
+
+void tranh_vat_can() {
+    distance = ultrasonic(Echo, Trig);
+    if (distance <= 12 && distance != 0) { 
+        dung();
+        lui();
+        delay_ms(100);
+        dung();
+
+        Left = nhintrai();
+        servo_write(150);
+        delay_ms(300);
+        Right = nhinphai();
+        servo_write(150);
+        delay_ms(300);
+
+        if (Left > Right) {
+            quayphai();
+            delay_ms(500);
+        } else if (Left < Right) {
+            quaytrai();
+            delay_ms(500);
+        } else {
+            lui();
+            delay_ms(500); 
+        }
+        dung();
+    } else {
+        lui();
+        delay_ms(1000);
+        dung();
+    }
+}
+
 
 void main(void)
 {   
@@ -157,6 +202,7 @@ void main(void)
     init_ultrasonic(Echo, Trig);
     motor_init();
     servo_init();
+    pinMode(PMODE, INPUT);
     delay_ms(3000);
     servo_write(100);
     delay_ms(1000);
@@ -164,22 +210,48 @@ void main(void)
     delay_ms(1000);
     servo_write(150);
     while (1)
-    {
-        if (Timer(&time1,200)){
-            control();
-        }
-        if (Timer(&time2, 300)){
-            distance = ultrasonic(Echo , Trig);
-            floatToString(distance, buffer, 1);
-            putstring(buffer);
-        }
-        if (Timer(&time3,400)){
-            if (dem<1){
-                motor_run(DUNG,DUNG,DUNG,DUNG);
-                rxdata='S';
+    {   
+        if (Timer(&time1,500)){
+            if (digitalRead(PMODE)==0){
+                mode = 0;
+            }else{
+                mode = 1;
             }
-            dem = 0;
         }
+        switch (mode){
+            case 0:
+                if (Timer(&time2, 200)){
+                    tranh_vat_can(); 
+                }
+                break;
+            case 1:
+                if (Timer(&time3,200)){
+                    control();
+                }
+                if (Timer(&time4,400)){
+                    if (dem<1){
+                        motor_run(DUNG,DUNG,DUNG,DUNG);
+                        rxdata='S';
+                    }
+                    dem = 0;
+                }
+                break;
+            case 2:
+                if (Timer(&time3,200)){
+                    switch (rxdata) {
+                        case '1': mode = 1; break;
+                        case '^': tien(); break;        
+                        case '-': lui(); break;        
+                        case '<': quaytrai(); break;     
+                        case '>': quayphai(); break;     
+                        case 'L': tien_re_trai(); break;
+                        case 'R': tien_re_phai(); break;
+                        case 'S': dung(); break;       
+                    }
+                }
+                
+        }
+        
     }
 }
 
