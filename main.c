@@ -45,64 +45,95 @@ int Timer(unsigned long *time, int wait){
 // nut 2 off->on: 3
 // nut 2 on->off: 4
 
+void tien(){
+    motor_run(TIEN,TIEN,TIEN,TIEN);
+    motor_setSpeed(1, 10);
+    motor_setSpeed(2, 10);
+    motor_setSpeed(3, 10);
+    motor_setSpeed(4, 10);
+    putstring("len\n");
+}
+
+void lui(){
+    motor_run(LUI,LUI,LUI,LUI);
+    motor_setSpeed(1, 10);
+    motor_setSpeed(2, 10);
+    motor_setSpeed(3, 10);
+    motor_setSpeed(4, 10);
+    putstring("xuong\n");
+}
+
+void quaytrai(){
+    motor_run(LUI,TIEN,TIEN,LUI);
+    motor_setSpeed(2, 7);
+    motor_setSpeed(3, 7);
+    motor_setSpeed(1, 7);
+    motor_setSpeed(4, 7);
+    putstring("trai\n");
+}
+
+void quayphai(){
+    motor_run(TIEN,LUI,LUI,TIEN);
+    motor_setSpeed(2, 7);
+    motor_setSpeed(3, 7);
+    motor_setSpeed(1, 7);
+    motor_setSpeed(4, 7);
+    putstring("phai\n");
+}
+
+void tien_re_trai(){
+    motor_run(TIEN,TIEN,TIEN,TIEN);
+    motor_setSpeed(2, 10);
+    motor_setSpeed(3, 10);
+    motor_setSpeed(1, 5);
+    motor_setSpeed(4, 5);
+}
+
+void tien_re_phai(){
+    motor_run(TIEN,TIEN,TIEN,TIEN);
+    motor_setSpeed(2, 5);
+    motor_setSpeed(3, 5);
+    motor_setSpeed(1, 10);
+    motor_setSpeed(4, 10);
+}
+
+void lui_re_trai(){
+    motor_run(LUI,LUI,LUI,LUI);
+    motor_setSpeed(2, 10);
+    motor_setSpeed(3, 10);
+    motor_setSpeed(1, 5);
+    motor_setSpeed(4, 5);
+}
+
+void lui_re_phai(){
+    motor_run(LUI,LUI,LUI,LUI);
+    motor_setSpeed(2, 5);
+    motor_setSpeed(3, 5);
+    motor_setSpeed(1, 10);
+    motor_setSpeed(4, 10);
+}
 void control(){
     if (rxdata=='U'){
-        motor_run(TIEN,TIEN,TIEN,TIEN);
-        motor_setSpeed(1, 10);
-        motor_setSpeed(2, 10);
-        motor_setSpeed(3, 10);
-        motor_setSpeed(4, 10);
-        putstring("len\n");
+        tien();
     }
     else if (rxdata=='D'){
-        motor_run(LUI,LUI,LUI,LUI);
-        motor_setSpeed(1, 10);
-        motor_setSpeed(2, 10);
-        motor_setSpeed(3, 10);
-        motor_setSpeed(4, 10);
-        putstring("xuong\n");
+        lui();
     }
     else if (rxdata=='L'){
-        motor_run(LUI,TIEN,TIEN,LUI);
-        motor_setSpeed(2, 7);
-        motor_setSpeed(3, 7);
-        motor_setSpeed(1, 7);
-        motor_setSpeed(4, 7);
-        putstring("trai\n");
+        quaytrai();
     }
     else if (rxdata=='R'){
-        motor_run(TIEN,LUI,LUI,TIEN);
-        motor_setSpeed(2, 7);
-        motor_setSpeed(3, 7);
-        motor_setSpeed(1, 7);
-        motor_setSpeed(4, 7);
-        putstring("phai\n");
+        quayphai();
     }
     else if (rxdata=='T'){
-        motor_run(TIEN,TIEN,TIEN,TIEN);
-        motor_setSpeed(2, 10);
-        motor_setSpeed(3, 10);
-        motor_setSpeed(1, 5);
-        motor_setSpeed(4, 5);
-        
+        tien_re_trai();
+
     }else if (rxdata=='F'){
-        motor_run(TIEN,TIEN,TIEN,TIEN);
-        motor_setSpeed(2, 5);
-        motor_setSpeed(3, 5);
-        motor_setSpeed(1, 10);
-        motor_setSpeed(4, 10);
+        tien_re_phai();
     }else if (rxdata=='H'){
-        motor_run(LUI,LUI,LUI,LUI);
-        motor_setSpeed(2, 10);
-        motor_setSpeed(3, 10);
-        motor_setSpeed(1, 5);
-        motor_setSpeed(4, 5);
+        lui_re_trai();
     }else if (rxdata=='G'){
-        motor_run(LUI,LUI,LUI,LUI);
-        motor_setSpeed(2, 5);
-        motor_setSpeed(3, 5);
-        motor_setSpeed(1, 10);
-        motor_setSpeed(4, 10);
+        lui_re_phai();
     }
     else if (rxdata=='1'){
     }
