@@ -208,7 +208,7 @@ void tranh_vat_can() {
             }
             dung(); // Dung lai sau khi re
         } else {
-            lui(); // Tiep tuc tien neu khong co vat can
+            tien(); // Tiep tuc tien neu khong co vat can
         }
     }
 }
