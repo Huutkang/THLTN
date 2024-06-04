@@ -196,6 +196,7 @@ void tranh_vat_can() {
 
 void main(void)
 {   
+    int savemode;
     char buffer[20];
     init_millis(16000000);
     uart_init(9600);
@@ -215,7 +216,7 @@ void main(void)
             if (digitalRead(PMODE)==0){
                 mode = 0;
             }else{
-                mode = 1;
+                mode = savemode;
             }
         }
         switch (mode){
@@ -248,6 +249,7 @@ void main(void)
                         case 'R': tien_re_phai(); break;
                         case 'S': dung(); break;       
                     }
+                    savemode = mode;
                 }
                 
         }
