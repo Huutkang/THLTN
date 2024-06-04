@@ -11,15 +11,15 @@
 #define Trig 10
 #define pinServo 9
 
-// Nút bam
+// NÃºt bam
 #define BUTTON1 2   // Nut chon che do tranh vat can (PD2)
 #define BUTTON2 3  // Nut chon che do Bluetooth (PD3)
-#define BUTTON3 4     // Nut chon che do giong nói (PD4)
+#define BUTTON3 4     // Nut chon che do giong nÃ³i (PD4)
 
 #define mode_tranhvatcan 1  // Che do tranh vat can
 #define mode_bluetooth 2 // Che do dieu khien Bluetooth
 #define mode_voice 3     // Che do dieu khien bang giong noi
-int mode = mode_tranhvatcan;   // Che do mac dinh là tranh vat can
+int mode = mode_tranhvatcan;   // Che do mac dinh lÃ  tranh vat can
 
 unsigned long current_time;
 unsigned long time1=0;
@@ -127,13 +127,13 @@ void lui_re_phai(){
     motor_setSpeed(4, 10);
 }
 int nhinphai() {
-  servo_write(20);
+  servo_write(70);
   delay_ms(500);
   Left = ultrasonic(Echo, Trig);
   return Left;
 }
 int nhintrai() {
-  servo_write(160);
+  servo_write(230);
   delay_ms(500);
   Right = ultrasonic(Echo, Trig);
   return Right;
@@ -189,10 +189,10 @@ void tranh_vat_can() {
 
             // Kiem tra khoang cach ben trai va ben phai
             Left = nhintrai();
-            servo_write(90); // Tra servo ve vi tri giua
+            servo_write(150); // Tra servo ve vi tri giua
             delay_ms(300);      // Doi servo on dinh vi tri
             Right = nhinphai();
-            servo_write(90);
+            servo_write(150);
             delay_ms(300);
 
             // Quyet dinh huong re dua tren khoang cach
