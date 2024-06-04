@@ -51,14 +51,14 @@ int digitalRead(int pin) {
     } else if (pin < 14) {
         pin -= 8;
         switch (pin){
-            case 0: return PIND.0;
-            case 1: return PIND.1;
-            case 2: return PIND.2;
-            case 3: return PIND.3;
-            case 4: return PIND.4;
-            case 5: return PIND.5;
-            case 6: return PIND.6;
-            case 7: return PIND.7;
+            case 0: return PINB.0;
+            case 1: return PINB.1;
+            case 2: return PINB.2;
+            case 3: return PINB.3;
+            case 4: return PINB.4;
+            case 5: return PINB.5;
+            case 6: return PINB.6;
+            case 7: return PINB.7;
         }
     }
     else{

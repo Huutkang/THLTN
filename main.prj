@@ -7,7 +7,7 @@ A=Freeware, for evaluation and
 C=
 D=28/05/2024 3:52:42 CH
 Files=1
-OpenedFiles=4
+OpenedFiles=1
 AllowDisplayFunctionCallTree=1
 CleanUp=2
 DebugOutputListFilesDirectory=Debug\List
@@ -18,9 +18,9 @@ OutputListFilesDirectory=Release\List
 OutputObjectFilesDirectory=Release
 OutputExecutableFilesDirectory=Release\Exe
 OutputLinkerFilesDirectory=Release\Link
-ActiveTab=4
+ActiveTab=1
 OF1=main.c
-TimeStamp1=1489264840
+TimeStamp1=1489285143
 OF2=lib\uart.h
 TimeStamp2=1489243300
 OF3=lib\gpio.h
@@ -508,7 +508,7 @@ Row=0
 Column=0
 ScrollPosX=0
 ScrollPosY=0
-TimeStamp=1489269788
+TimeStamp=1489285892
 [BookmarksFoldedCode]
 Files=11
 F1=main.c
@@ -523,11 +523,11 @@ F9=lib\Motor.h
 F10=Debug\List\main.asm
 F11=lib\servo.h
 [Bookmarks1]
-TimeStamp=1489269778
+TimeStamp=1489285143
 Row=0
 Column=0
 ScrollPosX=0
-ScrollPosY=100
+ScrollPosY=155
 BK0=-1
 BK1=-1
 BK2=-1
@@ -766,8 +766,6 @@ BK9=-1
 Blocks=0
 [FoldedCode10]
 Blocks=0
-[FoldedCode1]
-Blocks=0
 [FoldedCode5]
 Blocks=0
 [FoldedCode2]
@@ -788,3 +786,5 @@ F6=C:\Other Program Files\cvavreval\inc\delay.h
 F7=lib\gpio.h
 F8=lib\Motor.h
 F9=lib\servo.h
+[FoldedCode1]
+Blocks=0

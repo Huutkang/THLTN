@@ -20,7 +20,7 @@ unsigned long time4=0;
 // unsigned long time5=0;
 
 int distance = 0;
-int mode = 0;
+int mode = 1;
 float Left;
 float Right;
 
