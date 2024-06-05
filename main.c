@@ -16,7 +16,7 @@ unsigned long current_time;
 unsigned long time1=0;
 unsigned long time2=0;
 unsigned long time3=0;
-unsigned long time4=0;
+// unsigned long time4=0;
 // unsigned long time5=0;
 
 int distance = 0;
@@ -226,10 +226,10 @@ void main(void)
                 }
                 break;
             case 1:
-                if (Timer(&time3,200)){
+                if (Timer(&time2,200)){
                     control();
                 }
-                if (Timer(&time4,400)){
+                if (Timer(&time3,400)){
                     if (dem<1){
                         motor_run(DUNG,DUNG,DUNG,DUNG);
                         rxdata='S';
@@ -238,7 +238,7 @@ void main(void)
                 }
                 break;
             case 2:
-                if (Timer(&time3,200)){
+                if (Timer(&time2,200)){
                     switch (rxdata) {
                         case '1': mode = 1; break;
                         case '2': tien(); break;        
@@ -255,7 +255,5 @@ void main(void)
         }
     }
 }
-
-
 
 
