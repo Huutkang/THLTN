@@ -196,7 +196,7 @@ void tranh_vat_can() {
 
 void main(void)
 {   
-    int savemode;
+    int savemode=1;
     char buffer[20];
     init_millis(16000000);
     uart_init(9600);
@@ -253,7 +253,6 @@ void main(void)
                 }
                 
         }
-        
     }
 }
 
