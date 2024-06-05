@@ -16,10 +16,10 @@
 #define BUTTON2 3  // Nut chon che do Bluetooth (PD3)
 #define BUTTON3 4     // Nut chon che do giong nói (PD4)
 
-#define mode_tranhvatcan 1  // Che do tranh vat can
+#define mode_avoid_obstacle 1  // Che do tranh vat can
 #define mode_bluetooth 2 // Che do dieu khien Bluetooth
 #define mode_voice 3     // Che do dieu khien bang giong noi
-int mode = mode_tranhvatcan;   // Che do mac dinh là tranh vat can
+int mode = mode_avoid_obstacle;   // Che do mac dinh là tranh vat can
 
 unsigned long current_time;
 unsigned long time1=0;
@@ -30,7 +30,7 @@ unsigned long time3=0;
 
 int distance = 0;
 int Left, Right;
-int dem;
+int count;
 int Timer(unsigned long *time, int wait){
     current_time = millis();
     if (current_time-*time>wait){
@@ -56,7 +56,7 @@ int Timer(unsigned long *time, int wait){
 // nut 2 off->on: 3
 // nut 2 on->off: 4
 
-void tien(){
+void forward(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
     motor_setSpeed(1, 10);
     motor_setSpeed(2, 10);
@@ -65,7 +65,7 @@ void tien(){
     putstring("len\n");
 }
 
-void lui(){
+void backward(){
     motor_run(LUI,LUI,LUI,LUI);
     motor_setSpeed(1, 10);
     motor_setSpeed(2, 10);
@@ -74,11 +74,11 @@ void lui(){
     putstring("xuong\n");
 }
 
-void dung(){
+void stop(){
     motor_run(DUNG,DUNG,DUNG,DUNG);
     putstring("dung\n");
 }
-void quaytrai(){
+void turn_left(){
     motor_run(LUI,TIEN,TIEN,LUI);
     motor_setSpeed(2, 7);
     motor_setSpeed(3, 7);
@@ -87,7 +87,7 @@ void quaytrai(){
     putstring("trai\n");
 }
 
-void quayphai(){
+void turn_right(){
     motor_run(TIEN,LUI,LUI,TIEN);
     motor_setSpeed(2, 7);
     motor_setSpeed(3, 7);
@@ -96,7 +96,7 @@ void quayphai(){
     putstring("phai\n");
 }
 
-void tien_re_trai(){
+void turn_left_forward(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
     motor_setSpeed(2, 10);
     motor_setSpeed(3, 10);
@@ -104,7 +104,7 @@ void tien_re_trai(){
     motor_setSpeed(4, 5);
 }
 
-void tien_re_phai(){
+void turn_right_forward(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
     motor_setSpeed(2, 5);
     motor_setSpeed(3, 5);
@@ -112,27 +112,27 @@ void tien_re_phai(){
     motor_setSpeed(4, 10);
 }
 
-void lui_re_trai(){
+void turn_left_backward(){
     motor_run(LUI,LUI,LUI,LUI);
     motor_setSpeed(2, 10);
     motor_setSpeed(3, 10);
     motor_setSpeed(1, 5);
     motor_setSpeed(4, 5);
 }
-void lui_re_phai(){
+void turn_right_backward(){
     motor_run(LUI,LUI,LUI,LUI);
     motor_setSpeed(2, 5);
     motor_setSpeed(3, 5);
     motor_setSpeed(1, 10);
     motor_setSpeed(4, 10);
 }
-int nhinphai() {
+int look_left() {
   servo_write(70);
   delay_ms(500);
   Left = ultrasonic(Echo, Trig);
   return Left;
 }
-int nhintrai() {
+int look_right() {
   servo_write(230);
   delay_ms(500);
   Right = ultrasonic(Echo, Trig);
@@ -141,26 +141,26 @@ int nhintrai() {
 // -- Che do dieu khien Bluetooth --
 void control(){
     if (rxdata=='U'){
-        tien();
+        forward();
     }
     else if (rxdata=='D'){
-        lui();
+        backward();
     }
     else if (rxdata=='L'){
-        quaytrai();
+        turn_left();
     }
     else if (rxdata=='R'){
-        quayphai();
+        turn_right();
     }
     else if (rxdata=='T'){
-        tien_re_trai();
+        turn_left_forward();
 
     }else if (rxdata=='F'){
-        tien_re_phai();
+        turn_right_forward();
     }else if (rxdata=='H'){
-        lui_re_trai();
+        turn_left_backward();
     }else if (rxdata=='G'){
-        lui_re_phai();
+        turn_right_backward();
     }
     else if (rxdata=='1'){
     }
@@ -176,52 +176,52 @@ void control(){
     }   
 }
 //Che do tranh vat can
-void tranh_vat_can() {
+void avoid_obstacle() {
     if (Timer(&time1, 200)) { // Kiem tra chuong ngai vat moi 200ms
         distance = ultrasonic(Echo, Trig); // Do khoang cach
         if (distance <= 12 && distance != 0) { // Neu co vat can gan hon 12cm
-            dung(); // Dung xe
+            stop(); // Dung xe
 
             // Lui lai mot chut
-            lui();
+            backward();
             delay_ms(100); // Dung lai mot chut de on dinh
-            dung();
+            stop();
 
             // Kiem tra khoang cach ben trai va ben phai
-            Left = nhintrai();
+            Left = look_left();
             servo_write(150); // Tra servo ve vi tri giua
             delay_ms(300);      // Doi servo on dinh vi tri
-            Right = nhinphai();
+            Right = look_right();
             servo_write(150);
             delay_ms(300);
 
             // Quyet dinh huong re dua tren khoang cach
             if (Left > Right) {
-                quayphai(); // Re phai neu ben phai rong hon
+                turn_right(); // Re phai neu ben phai rong hon
                 delay_ms(500);
             } else if (Left < Right) {
-                quaytrai(); // Re trai neu ben trai rong hon
+                turn_left(); // Re trai neu ben trai rong hon
                 delay_ms(500);
             } else {
-                lui(); // Lui lai neu ca hai ben deu bi chan
+                backward(); // Lui lai neu ca hai ben deu bi chan
                 delay_ms(500); 
             }
-            dung(); // Dung lai sau khi re
+            stop(); // Dung lai sau khi re
         } else {
-            tien(); // Tiep tuc tien neu khong co vat can
+            forward(); // Tiep tuc tien neu khong co vat can
         }
     }
 }
 // Che do dieu khien bang giong noi
 void voice_control() {
     switch (rxdata) {
-        case '^': tien(); break;        
-        case '-': lui(); break;        
-        case '<': quaytrai(); break;     
-        case '>': quayphai(); break;     
-        case 'L': tien_re_trai(); break;
-        case 'R': tien_re_phai(); break;
-        case 'S': dung(); break;       
+        case '^': forward(); break;        
+        case '-': backward(); break;        
+        case '<': turn_left(); break;     
+        case '>': turn_right(); break;     
+        case 'L': turn_left_forward(); break;
+        case 'R': turn_right_forward(); break;
+        case 'S': stop(); break;       
         default: break;
     }
 }
@@ -246,7 +246,7 @@ void main(void)
         if (digitalRead(BUTTON1) == LOW) {
             delay_ms(20);
             if (digitalRead(BUTTON1) == LOW) {
-                mode = mode_tranhvatcan;
+                mode = mode_avoid_obstacle;
                 while (digitalRead(BUTTON1) == LOW);
             }
         } else if (digitalRead(BUTTON2) == LOW) {
@@ -265,8 +265,8 @@ void main(void)
 
         // Doi cac che do
         switch (mode) {
-            case mode_tranhvatcan:
-                tranh_vat_can(); // Che do tranh vat can
+            case mode_avoid_obstacle:
+                avoid_obstacle(); // Che do tranh vat can
                 break;
             case mode_bluetooth:
                 control(); // Che do dieu khien Bluetooth
