@@ -242,13 +242,13 @@ void main(void)
                 if (Timer(&time2,200)){
                     switch (rxdata) {
                         case '1': mode = 1; break;
-                        case '2': tien(); break;        
-                        case '3': lui(); break;        
-                        case '4': quaytrai(); break;     
-                        case '5': quayphai(); break;     
-                        case '6': tien_re_trai(); break;
-                        case '7': tien_re_phai(); break;
-                        case '8': dung(); break;       
+                        case '^': tien(); break;        
+                        case '-': lui(); break;        
+                        case '<': quaytrai(); break;     
+                        case '>': quayphai(); break;     
+                        case '(': tien_re_trai(); break;
+                        case ')': tien_re_phai(); break;
+                        case '.': dung(); break;
                     }
                     savemode = mode;
                 }
