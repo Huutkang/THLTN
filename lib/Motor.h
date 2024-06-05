@@ -121,6 +121,7 @@ void motor_setSpeed(int mt, int speed){
             break;
         case 4:
             T4 = speed;
+            break;
     }
 }
 
