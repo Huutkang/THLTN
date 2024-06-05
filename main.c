@@ -150,11 +150,13 @@ void control(){
     }else if (rxdata=='G'){
         lui_re_phai();
     }else if (rxdata=='1'){
-        mode = 2;
+        mode = 1;
     }else if (rxdata=='2'){
-        mode = 2;
+        mode = 1;
     }else if (rxdata=='3'){
+        mode = 2;
     }else if (rxdata=='4'){
+        mode = 2;
     }else{
         motor_run(DUNG,DUNG,DUNG,DUNG);
     }
