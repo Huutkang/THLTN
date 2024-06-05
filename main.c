@@ -51,19 +51,19 @@ int Timer(unsigned long *time, int wait){
 
 void tien(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
-    motor_setSpeed(1, 10);
-    motor_setSpeed(2, 10);
-    motor_setSpeed(3, 10);
-    motor_setSpeed(4, 10);
+    motor_setSpeed(1, 6);
+    motor_setSpeed(2, 6);
+    motor_setSpeed(3, 6);
+    motor_setSpeed(4, 6);
     putstring("len\n");
 }
 
 void lui(){
     motor_run(LUI,LUI,LUI,LUI);
-    motor_setSpeed(1, 10);
-    motor_setSpeed(2, 10);
-    motor_setSpeed(3, 10);
-    motor_setSpeed(4, 10);
+    motor_setSpeed(1, 6);
+    motor_setSpeed(2, 6);
+    motor_setSpeed(3, 6);
+    motor_setSpeed(4, 6);
     putstring("xuong\n");
 }
 
@@ -87,8 +87,8 @@ void quayphai(){
 
 void tien_re_trai(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
-    motor_setSpeed(2, 10);
-    motor_setSpeed(3, 10);
+    motor_setSpeed(2, 7);
+    motor_setSpeed(3, 7);
     motor_setSpeed(1, 5);
     motor_setSpeed(4, 5);
 }
@@ -97,14 +97,14 @@ void tien_re_phai(){
     motor_run(TIEN,TIEN,TIEN,TIEN);
     motor_setSpeed(2, 5);
     motor_setSpeed(3, 5);
-    motor_setSpeed(1, 10);
-    motor_setSpeed(4, 10);
+    motor_setSpeed(1, 7);
+    motor_setSpeed(4, 7);
 }
 
 void lui_re_trai(){
     motor_run(LUI,LUI,LUI,LUI);
-    motor_setSpeed(2, 10);
-    motor_setSpeed(3, 10);
+    motor_setSpeed(2, 7);
+    motor_setSpeed(3, 7);
     motor_setSpeed(1, 5);
     motor_setSpeed(4, 5);
 }
@@ -113,8 +113,8 @@ void lui_re_phai(){
     motor_run(LUI,LUI,LUI,LUI);
     motor_setSpeed(2, 5);
     motor_setSpeed(3, 5);
-    motor_setSpeed(1, 10);
-    motor_setSpeed(4, 10);
+    motor_setSpeed(1, 7);
+    motor_setSpeed(4, 7);
 }
 
 void dung(){
@@ -123,12 +123,12 @@ void dung(){
 
 int nhinphai() {
     servo_write(50); 
-    delay_ms(100);
+    delay_ms(50);
     return ultrasonic(Echo, Trig);
 }
 int nhintrai() {
     servo_write(150); 
-    delay_ms(100);
+    delay_ms(50);
     return ultrasonic(Echo, Trig);
 }
 
@@ -163,65 +163,34 @@ void control(){
 }
 void tranh_vat_can() {
     distance = ultrasonic(Echo, Trig);
-    if (distance <= 10 && distance != 0) { 
-        dung();
-        lui();
+    if (distance <= 16 && distance != 0) { 
         dung();
         Left = nhintrai();
+        delay_ms(20);
         Right = nhinphai();
+        delay_ms(20);
         servo_write(100);
-        if (Left > Right) {
+        if (Left > Right && Left > distance){
             quaytrai();
-        } else if (Left < Right) {
+            quaytrai();
+            quaytrai();
+        } 
+        else if (Left < Right && Right > distance ){
             quayphai();
-        } else {
+            quayphai();
+            quayphai();
+        } 
+        else {
+            lui();
             lui(); 
         }
-        delay_ms(100);
+        delay_ms(20);
         dung();
     } else {
+        delay_ms(150);
         tien();
     }
 }
-// void tranh_vat_can() {
-//     if (Timer(&time1, 200)) { // Kiem tra chuong ngai vat moi 200ms
-//         distance = ultrasonic(Echo, Trig); // Do khoang cach
-//         if (distance <= 10 && distance != 0) { // Neu co vat can gan hon 12cm
-//             dung(); // Dung xe
-
-//             // Lui lai mot chut
-//             lui();
-//             delay_ms(100); // Dung lai mot chut de on dinh
-//             dung();
-
-//             // Kiem tra khoang cach ben trai va ben phai
-//             Left = nhintrai();
-//             servo_write(150); // Tra servo ve vi tri giua
-//             delay_ms(300);      // Doi servo on dinh vi tri
-//             Right = nhinphai();
-//             servo_write(150);
-//             delay_ms(300);
-
-//             // Quyet dinh huong re dua tren khoang cach
-//             if (Left > Right + 2) {
-//                 quayphai(); // Re phai neu ben phai rong hon 
-//                 delay_ms(500);   
-//                 servo_write(150);
-//                 delay_ms(500);
-//             } else if (Left +2 < Right) {
-//                 quaytrai(); // Re trai neu ben trai rong hon
-//                 delay_ms(500);
-//                 servo_write(150);
-//                 delay_ms(500);
-//             } else {
-//                 lui(); // Lui lai neu ca hai ben deu bi chan
-//                 delay_ms(500); 
-//             }
-//             dung(); // Dung lai sau khi re
-//         } else if (distance > 12)
-//             tien(); // Tiep tuc tien neu khong co vat can
-//     }
-// }
 
 void main(void)
 {   
@@ -249,7 +218,7 @@ void main(void)
         }
         switch (mode){
             case 0:
-                if (Timer(&time2, 300)){
+                if (Timer(&time2, 200)){
                     tranh_vat_can(); 
                 }
                 break;
@@ -281,6 +250,7 @@ void main(void)
                     }
                     savemode = mode;
                 }
+                
         }
     }
 }
